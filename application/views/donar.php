@@ -71,7 +71,7 @@ require_once 'common/nav.php';
 		    <div class="col-md-11" id = "registration" style="display:none">
 		    	<div class="col-md-1"></div>
 		    	<div class="col-md-10">
-		    	<form class="form-horizontal form-label-left adduserForm" data-parsley-validate class="form-horizontal form-label-left"  method="post">
+		    	<form class="form-horizontal form-label-left donarForm" data-parsley-validate class="form-horizontal form-label-left"  method="post">
 			    	<fieldset class="scheduler-border">
 			    		<legend class="scheduler-border">Donor Registration:</legend>
 			    		<div class="col-sm-12">
@@ -112,16 +112,33 @@ require_once 'common/nav.php';
 							<div class="form-group col-md-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">Date of Birth</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<input type="text" class="form-control last_name" name = "last_name" id = "last_name" placeholder="Date of Birth" required="required">
+									<input type="text" class="form-control last_name" name = "DOB" id = "last_name" placeholder="Date of Birth" required="required">
 								</div>
 							</div>
 							
 							<div class="form-group col-md-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">Blood Group</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									 <select class="form-control" id="subject-name" class="form-control col-md-7 col-xs-12" name="subject-name">
-									 <option value="0">Select Blood Group</option>
-									 </select>
+									<select class="form-control" id="subject-name" class="form-control col-md-7 col-xs-12" name="blood_group" required="required">
+									 	<option value="0">Select Blood Group</option>
+									 	<option value="A+">A+</option>
+										<option value="A-">A-</option>
+										<option value="A1+">A1+</option>
+										<option value="A1-">A1-</option>
+										<option value="A1B+">A1B+</option>
+										<option value="A1B-">A1B-</option>
+										<option value="A2+">A2+</option>
+										<option value="A2-">A2-</option>
+										<option value="A2B+">A2B+</option>
+										<option value="A2B-">A2B-</option>
+										<option value="AB+">AB+</option>
+										<option value="AB-">AB-</option>
+										<option value="B+">B+</option>
+										<option value="B-">B-</option>
+										<option value="Bombay Blood Group">Bombay Blood Group</option>
+										<option value="O+">O+</option>
+										<option value="O-">O-</option>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -132,7 +149,7 @@ require_once 'common/nav.php';
 						<div class="form-group">
 							<label class="control-label col-md-3">Permanent Address</label>
 							<div class="col-md-9">
-								<textarea  class="form-control col-md-6" rows="4" id="comment" style="max-width:88%"></textarea>
+								<textarea  class="form-control col-md-6" rows="4" id="comment" name ="Address"style="max-width:88%" required = "required"></textarea>
 							</div>
 						</div>
 
@@ -140,15 +157,19 @@ require_once 'common/nav.php';
 							<div class="form-group col-sm-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">Country</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<select class="form-control" id="subject-name" class="form-control col-md-7 col-xs-12" name="subject-name">
+									<select class="form-control" id="country" class="form-control col-md-7 col-xs-12" name="country" required = "required">
 									<option value="0">Select Country</option>
+									<?php foreach ($country as $key ) {
+									?>
+									<option value="<?php echo $key['country'] ?>"><?php echo $key['country'] ?></option>
+									<?php }?>
 									</select>
 								</div>
 							</div>
 							<div class="form-group col-sm-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">State</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<select class="form-control" id="subject-name" class="form-control col-md-7 col-xs-12" name="subject-name">
+									<select class="form-control" id="state" class="form-control col-md-7 col-xs-12" name="state" required = "required">
 									<option value="0">Select State</option>
 									</select>
 								</div>
@@ -159,7 +180,7 @@ require_once 'common/nav.php';
 							<div class="form-group col-sm-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">District</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<select class="form-control" id="subject-name" class="form-control col-md-7 col-xs-12" name="subject-name">
+									<select class="form-control" id="district" class="form-control col-md-7 col-xs-12" name="district" required = "required">
 									<option value="0">Select District</option>
 									</select>
 								</div>
@@ -167,7 +188,7 @@ require_once 'common/nav.php';
 							<div class="form-group col-sm-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">City</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<select class="form-control" id="subject-name" class="form-control col-md-7 col-xs-12" name="subject-name">
+									<select class="form-control" id="city" class="form-control col-md-7 col-xs-12" name="city" required = "required">
 									<option value="0">Select City</option>
 									</select>
 								</div>
@@ -178,13 +199,13 @@ require_once 'common/nav.php';
 							<div class="form-group col-md-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">Mobile No</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<input type="text" class="form-control last_name" name = "last_name" id = "last_name" placeholder="Mobile Number" required="required">
+									<input type="number" class="form-control last_name" name = "mobile_no" id = "mobile_no" placeholder="Mobile Number" required="required">
 								</div>
 							</div>
 							<div class="form-group col-md-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">Alternate Mobile No</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<input type="text" class="form-control last_name" name = "last_name" id = "last_name" placeholder="Alternate Number">
+									<input type="number" class="form-control last_name" name = "Alt_No" id = "last_name" placeholder="Alternate Number">
 								</div>
 							</div>
 						</div>
@@ -200,7 +221,7 @@ require_once 'common/nav.php';
 							<div class="form-group col-md-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">User Name</label>
 								<div class="col-md-6 col-sm-9 col-xs-12">
-									<input type="text" class="form-control first_name" id="pass1" name="pass1" placeholder="UserName" required>
+									<input type="text" class="form-control first_name" id="username" name="username" placeholder="UserName" required>
 								</div>
 							</div>
 						</div>
@@ -222,7 +243,7 @@ require_once 'common/nav.php';
 						<div class="form-group" style="margin-top:10px">
 							<div class="col-md-12 col-sm-9 col-xs-12 col-md-offset-3">
 								<button type="button" class="btn btn-primary col-md-2" id="cancel" style="padding: 5px;margin: 25PX;">Cancel</button>
-								<button type="submit" class="btn btn-success addUser col-md-2" id="addUser" style="padding: 5px;margin: 25PX;">Submit</button>
+								<button type="button" class="btn btn-success addUser col-md-2" id="addUser" style="padding: 5px;margin: 25PX;">Submit</button>
 							</div>
 						</div>
 					</fieldset>
@@ -238,15 +259,99 @@ require_once 'common/nav.php';
 </div>
 </body>
 </html>
+<script src="<?php echo base_url();?>assets/js/lodash.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){ 
-
+	var SITE = "<?php echo site_url();?>"
 	$('#registrationLink').on('click', function(){
 		$('#registration').fadeIn().delay(5000);
 	});
 	$('#cancel').on('click', function(){
 		$('#registration').fadeOut().delay(500);
 	});
-	    	
+
+	$('#country').on('click', function(){
+		$.ajax({
+			url: SITE +'index.php/donar/getState/'+$(this).val(),
+			type: 'post',
+			success: function(response) {
+				var response = JSON.parse(response);
+				$("#state").empty();
+				var option ='';
+				option += '<option value = 0>Select State</option>';		
+
+				if(response.success == 'true') {
+					$.each(response.data, function(state, val) {
+						option += '<option value='+val['state']+'>'+val['state']+'</option>';
+		        		$('#state').append(option);
+		        	});
+				} else {
+					alert(response.message);
+		        	$('#state').append(option);
+				}
+	        }
+		});	
+	});
+
+	$('#state').on('click', function(){
+		$.ajax({
+			url: SITE +'index.php/donar/getDistrict/'+$(this).val(),
+			type: 'post',
+			success: function(response) {
+				var response = JSON.parse(response);
+				$("#district").empty();
+				var option ='';
+				option += '<option value = 0>Select District</option>';		
+				if(response.success == 'true') {
+					$.each(response.data, function(state, val) {
+						option += '<option value='+val['district']+'>'+val['district']+'</option>';
+		        	});
+	        		$('#district').append(option);
+				} else {
+					alert(response.message);
+		        	$('#district').append(option);
+				}
+	        }
+		});	
+	});
+
+	$('#district').on('click', function(){
+		$.ajax({
+			url: SITE +'index.php/donar/getCity/'+$(this).val(),
+			type: 'post',
+			success: function(response) {
+				var response = JSON.parse(response);
+				$("#city").empty();
+				var option ='';
+				option += '<option value = 0>Select City</option>';		
+				if(response.success == 'true') {
+					$.each(response.data, function(state, val) {
+						option += '<option value='+val['city']+'>'+val['city']+'</option>';
+		        	});
+	        		$('#city').append(option);
+				} else {
+					alert(response.message);
+		        	$('#city').append(option);
+				}
+	        }
+		});	
+	});
+
+	$('#addUser').on('click', function(){
+		$.ajax({
+			url: SITE +'index.php/donar/save',
+			data: $('.donarForm').serialize(),
+			type: 'post',
+			success: function(response) {
+				var response = JSON.parse(response);
+				if(response.success == 'true') {
+					alert('Register SuccessFully');
+					window.location.reload(true);
+				} else {
+					alert(response.message);
+				}
+	        }
+		});
+	})
 });
 </script>
