@@ -44,7 +44,7 @@ require_once 'common/nav.php';
 							<p class="services-icon"><i class="fa fa-search fa-5x"></i></p>
 							<h4 class="services-title">Find a Donar</h4>
 							<p class="services-body">Cras interdum placerat libero vel tempor. Curabitur gravida iaculis erat quis dignissim.</p>
-							<p class="services-more"><a href="#">Find Out Your Donar</a></p>
+							<p class="services-more"><a href="<?php echo base_url();?>index.php/finddonar ">Find Out Your Donar</a></p>
 					</div>        
 				</div>
 		    </div>

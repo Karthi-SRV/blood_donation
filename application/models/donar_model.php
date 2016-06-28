@@ -294,5 +294,11 @@ class Donar_model extends CI_Model {
 			return $response;
 		}
 	}
+
+	public function getData(){
+		$sql = 'SELECT *  FROM donor_details  order by id asc';
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
 }
 

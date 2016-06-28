@@ -6,8 +6,9 @@
 	}
 
 	public function index() {
-
-		$this->load->view('blog');
+		$this->load->model('Blog_model');
+		$data['blog']= $this->Blog_model->getBlog();
+		$this->load->view('blog', $data);
 	}
 	
 }
