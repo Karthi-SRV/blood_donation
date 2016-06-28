@@ -172,5 +172,127 @@ class Donar_model extends CI_Model {
 			return $response;	
 		}
 	}
+
+	public function bloodRequestData($data = '') {
+		$response['success'] = 'false';
+		$response['message'] = 'something Went Wrong';
+		
+		if(isset($data)) {
+			if(isset($data['patient_name']) && !empty($data['patient_name'])){
+				$response['data']['patient_name'] = $data['patient_name'];
+			} else {
+				$response['message'] = 'Enter Patient Name';
+				return $response;
+			}
+
+			if(isset($data['patient_age']) && !empty($data['patient_age']) && $data['patient_age'] != 0){
+				$response['data']['patient_age'] = $data['patient_age'];
+			} else {
+				$response['message'] = 'Enter Patient Age';
+				return $response;
+			}
+
+			if(isset($data['blood_needed_date']) && !empty($data['blood_needed_date'])){
+				$response['data']['blood_needed_date'] = $data['blood_needed_date'];
+			} else {
+				$response['message'] = 'Fill When you need blood?';
+				return $response;
+			}
+
+			if(isset($data['blood_group']) && !empty($data['blood_group'])){
+				$response['data']['blood_group'] = $data['blood_group'];
+			} else {
+				$response['message'] = 'Select Blood Group';
+				return $response;
+			}
+
+			if(isset($data['units']) && !empty($data['units'])){
+				$response['data']['units'] = $data['units'];
+			} else {
+				$response['message'] = 'Enter Units ';
+				return $response;
+			}
+
+			if(isset($data['Location']) && !empty($data['Location'])){
+				$response['data']['Location'] = $data['Location'];
+			} else {
+				$response['message'] = 'Enter Location';
+				return $response;
+			}
+
+			if(isset($data['patient_address']) && !empty($data['patient_address'])){
+				$response['data']['patient_address'] = $data['patient_address'];
+			} else {
+				$response['message'] = 'Enter Patient Address';
+				return $response;
+			}
+
+			if(isset($data['purpose']) && !empty($data['purpose'])){
+				$response['data']['purpose'] = $data['purpose'];
+			} else {
+				$response['message'] = 'Enter Purpose';
+				return $response;
+			}
+
+			if(isset($data['hospital_name']) && !empty($data['hospital_name'])){
+				$response['data']['hospital_name'] = $data['hospital_name'];
+			} else {
+				$response['message'] = 'Enter Hospital Name';
+				return $response;
+			}
+
+			if(isset($data['mobile_no']) && !empty($data['mobile_no'])){
+				if(strlen($data['mobile_no']) == 10) {
+					$response['data']['mobile_no'] = $data['mobile_no'];
+					if(!empty($data['Alt_mobile_no'])) {
+						if(strlen($data['Alt_mobile_no']) == 10) {
+							$response['data']['Alt_mobile_no'] = $data['Alt_mobile_no'];
+						} else {
+							$response['message'] = 'Enter 10 digit Alternate Mobile Number';
+							return $response;		
+						}
+					} else{
+						$response['data']['Alt_mobile_no'] = $data['Alt_mobile_no'];	
+					}	
+				} else {
+					$response['message'] = 'Enter 10 digit Mobile Number';
+					return $response;
+				}
+			} else {
+				$response['message'] = 'Enter Mobile Number';
+				return $response;
+			}
+
+			if(isset($data['email']) && !empty($data['email'])){
+				$response['data']['email'] = $data['email'];
+			} else {
+				$response['message'] = 'Enter Email Id';
+				return $response;
+			}
+
+			$response['success'] = true;
+			return $response;
+		} else {
+			$response['message'] = "Please enter all the data";
+			return $response;	
+		}
+	}
+
+	public function search_blood($id = ''){
+		$response['success'] = 'false';
+		$response['message'] = 'something Went Wrong';
+
+		if($id) {
+			$sql = 'SELECT * FROM blood_request where id = "'.$id.'"';
+			$result = $this->db->query($sql);
+			$response['success'] = 'true';
+			$response['result'] = $result->result_array();
+			$response['message'] = '';
+			return $response;
+		} else {
+			$response['message'] = 'Please Enter Blood Request Id';
+			return $response;
+		}
+	}
 }
 

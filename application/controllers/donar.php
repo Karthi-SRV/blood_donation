@@ -60,6 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}
 	}
+
 	public function save() {
 
 		$response['success'] = 'false';
@@ -94,6 +95,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		} else {
 			print_r (json_encode($response));
 		}
+	}
+
+	public function bloodRequest(){
+		$response['success'] = 'false';
+		$response['message'] = 'something Went Wrong';
+		$data = $this->input->post();
+		$this->load->model('Donar_model');
+		$response = $this->Donar_model->bloodRequestData($data);
+		if($response['success'] == 'true') {
+			$blood_request = [];
+			$blood_request['patient_name'] = $response['data']['patient_name'];
+			$blood_request['blood_group'] = $response['data']['blood_group'];
+			$blood_request['patient_age'] = $response['data']['patient_age'];
+			$blood_request['blood_needed_date'] = $response['data']['blood_needed_date'];
+			$blood_request['units'] = $response['data']['units'];
+			$blood_request['mobile_no'] = $response['data']['mobile_no'];
+			$blood_request['alt_mobile_no'] = $response['data']['Alt_mobile_no'];	
+			$blood_request['email'] = $response['data']['email'];	
+			$blood_request['hospital_name'] = $response['data']['hospital_name'];	
+			$blood_request['location'] = $response['data']['Location'];	
+			$blood_request['patient_address'] = (int)$response['data']['patient_address'];
+			$blood_request['purpose'] = $response['data']['purpose'];
+			if((int)$data['blood_request_id']) {
+				$this->db->where('id',(int)$data['blood_request_id']);
+				$this->db->update('blood_request', $blood_request);
+				$response['success'] = 'true';
+			} else{
+				$this->db->insert('blood_request', $blood_request);
+				$response['id'] = $this->db->insert_id();
+				$response['success'] = 'true';
+			}
+			print_r(json_encode($response));
+		} else {
+			print_r (json_encode($response));
+		}
+		
+	}
+
+	public function search_blood($id = ''){
+		$response['success'] = 'false';
+		$response['message'] = 'something Went Wrong';
+
+		$this->load->model('Donar_model');
+		if($id){
+			$response1 = $this->Donar_model->search_blood((int)$id);
+			if($response1['success'] == 'true') {
+				$response['success'] = 'true';
+				$response['data'] = $response1['result'];
+				print_r(json_encode($response));
+			} else {
+				print_r (json_encode($response));
+			}
+		} else {
+			$response['message'] = 'Please Enter Valid Blood Request Id';
+			print_r (json_encode($response));
+		}
+
 	}
 	
 }
