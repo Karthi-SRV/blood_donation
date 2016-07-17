@@ -128,7 +128,16 @@ class Donar_model extends CI_Model {
 			}
 
 			if(isset($data['email']) && !empty($data['email'])){
-				$response['data']['email'] = $data['email'];
+				$sql = 'SELECT *   FROM accounts where accounts.email = "'.$data['email'].'"';
+				$result = $this->db->query($sql);
+				$userData = $result->result_array();
+				if(sizeof($userData) > 0) {
+					$response['message'] = 'Email Id already Exit. Please Select different Email Id';
+					return $response;	
+				} else {
+					$response['data']['email'] = $data['email'];
+				}
+		
 			} else {
 				$response['message'] = 'Enter Email Id';
 				return $response;
